@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import '../models/landmark.dart';
 import '../services/camera_service.dart';
+import '../services/landmark_classifier.dart';
 import '../widgets/landmark_card.dart';
 
 class ScanScreen extends StatefulWidget {
@@ -14,10 +16,12 @@ class ScanScreen extends StatefulWidget {
 class _ScanScreenState extends State<ScanScreen>
     with SingleTickerProviderStateMixin {
   final CameraService _cameraService = CameraService();
+  final LandmarkClassifier _classifier = LandmarkClassifier();
 
   bool _cameraReady = false;
   bool _isScanning = false;
   Landmark? _detectedLandmark;
+  double? _confidence;
 
   late AnimationController _pulseController;
   late Animation<double> _pulseAnimation;
@@ -35,11 +39,14 @@ class _ScanScreenState extends State<ScanScreen>
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
 
-    _initCamera();
+    _initServices();
   }
 
-  Future<void> _initCamera() async {
-    await _cameraService.initialize();
+  Future<void> _initServices() async {
+    await Future.wait([
+      _cameraService.initialize(),
+      _classifier.initialize(),
+    ]);
     if (mounted) {
       setState(() => _cameraReady = _cameraService.isInitialized);
     }
@@ -50,26 +57,65 @@ class _ScanScreenState extends State<ScanScreen>
     setState(() {
       _isScanning = true;
       _detectedLandmark = null;
+      _confidence = null;
     });
 
-    await Future.delayed(const Duration(milliseconds: 1800));
+    final photo = await _cameraService.takePicture();
 
-    // Mock: gerçekte model çıktısı gelecek
-    final result = mockLandmarks[
-        DateTime.now().millisecondsSinceEpoch % mockLandmarks.length];
-
-    if (mounted) {
-      setState(() {
-        _isScanning = false;
-        _detectedLandmark = result;
-      });
+    if (photo == null) {
+      if (mounted) setState(() => _isScanning = false);
+      return;
     }
+
+    final result = await _classifier.classify(File(photo.path));
+
+    if (!mounted) return;
+
+    if (result == null) {
+      setState(() => _isScanning = false);
+      _showNotFound();
+      return;
+    }
+
+    final matched = _findLandmarkByLabel(result.label);
+
+    setState(() {
+      _isScanning = false;
+      _detectedLandmark = matched;
+      _confidence = result.confidence;
+    });
+  }
+
+  Landmark? _findLandmarkByLabel(String label) {
+    try {
+      return mockLandmarks.firstWhere(
+        (l) => l.name.toLowerCase() == label.toLowerCase(),
+      );
+    } catch (_) {
+      return Landmark(
+        id: 'unknown',
+        name: label,
+        description: 'Bu yapı hakkında detaylı bilgi yakında eklenecektir.',
+        city: '',
+        period: '',
+      );
+    }
+  }
+
+  void _showNotFound() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Yapı tanınamadı. Kamerayı yapıya daha iyi odaklayın.'),
+        duration: Duration(seconds: 2),
+      ),
+    );
   }
 
   @override
   void dispose() {
     _pulseController.dispose();
     _cameraService.dispose();
+    _classifier.dispose();
     super.dispose();
   }
 
@@ -84,9 +130,22 @@ class _ScanScreenState extends State<ScanScreen>
             bottom: 0,
             left: 0,
             right: 0,
-            child: LandmarkCard(
-              landmark: _detectedLandmark!,
-              onClose: () => setState(() => _detectedLandmark = null),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (_confidence != null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: _ConfidenceBadge(confidence: _confidence!),
+                  ),
+                LandmarkCard(
+                  landmark: _detectedLandmark!,
+                  onClose: () => setState(() {
+                    _detectedLandmark = null;
+                    _confidence = null;
+                  }),
+                ),
+              ],
             ),
           ),
       ],
@@ -157,6 +216,28 @@ class _ScanScreenState extends State<ScanScreen>
               ),
             ),
         ],
+      ),
+    );
+  }
+}
+
+class _ConfidenceBadge extends StatelessWidget {
+  final double confidence;
+
+  const _ConfidenceBadge({required this.confidence});
+
+  @override
+  Widget build(BuildContext context) {
+    final percent = (confidence * 100).toStringAsFixed(1);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.black54,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        'Güven skoru: %$percent',
+        style: const TextStyle(color: Colors.white, fontSize: 12),
       ),
     );
   }
