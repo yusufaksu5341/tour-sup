@@ -20,6 +20,7 @@ class _ScanScreenState extends State<ScanScreen>
 
   bool _cameraReady = false;
   bool _isScanning = false;
+  bool _modelReady = false;
   Landmark? _detectedLandmark;
   double? _confidence;
 
@@ -48,7 +49,10 @@ class _ScanScreenState extends State<ScanScreen>
       _classifier.initialize(),
     ]);
     if (mounted) {
-      setState(() => _cameraReady = _cameraService.isInitialized);
+      setState(() {
+        _cameraReady = _cameraService.isInitialized;
+        _modelReady = _classifier.isReady;
+      });
     }
   }
 
@@ -77,7 +81,7 @@ class _ScanScreenState extends State<ScanScreen>
       return;
     }
 
-    final matched = _findLandmarkByLabel(result.label);
+    final matched = _findLandmarkByLabel(result.label, result.landmarkId);
 
     setState(() {
       _isScanning = false;
@@ -86,14 +90,19 @@ class _ScanScreenState extends State<ScanScreen>
     });
   }
 
-  Landmark? _findLandmarkByLabel(String label) {
+  Landmark? _findLandmarkByLabel(String label, String landmarkId) {
+    // Önce landmark id ile eşleştir (daha güvenilir)
+    try {
+      return mockLandmarks.firstWhere((l) => l.id == landmarkId);
+    } catch (_) {}
+    // Bulunamazsa isim ile dene
     try {
       return mockLandmarks.firstWhere(
         (l) => l.name.toLowerCase() == label.toLowerCase(),
       );
     } catch (_) {
       return Landmark(
-        id: 'unknown',
+        id: landmarkId,
         name: label,
         description: 'Bu yapı hakkında detaylı bilgi yakında eklenecektir.',
         city: '',
@@ -126,6 +135,13 @@ class _ScanScreenState extends State<ScanScreen>
       children: [
         _buildCameraPreview(),
         _buildScanOverlay(),
+        if (!_modelReady)
+          const Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: _MockModeBanner(),
+          ),
         if (_detectedLandmark != null)
           Positioned(
             bottom: 0,
@@ -221,6 +237,42 @@ class _ScanScreenState extends State<ScanScreen>
     );
   }
 }
+
+// ---------------------------------------------------------------------------
+// Model henüz eğitilmemiş — ekranın üstünde gösterilen bilgi bandı
+// ---------------------------------------------------------------------------
+
+class _MockModeBanner extends StatelessWidget {
+  const _MockModeBanner();
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: Colors.orange.shade800.withValues(alpha: 0.92),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: const Row(
+          children: [
+            Icon(Icons.info_outline, color: Colors.white, size: 16),
+            SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                'Model henüz yüklenmedi — demo mod aktif',
+                style: TextStyle(color: Colors.white, fontSize: 12),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
 
 class _ConfidenceBadge extends StatelessWidget {
   final double confidence;
