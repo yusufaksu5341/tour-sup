@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import 'scan_screen.dart';
 import 'taxi_screen.dart';
 import 'emergency_screen.dart';
@@ -21,34 +22,36 @@ class _HomeScreenState extends State<HomeScreen> {
     ProfileScreen(),
   ];
 
-  final List<NavigationDestination> _destinations = const [
-    NavigationDestination(
-      icon: Icon(Icons.camera_alt_outlined),
-      selectedIcon: Icon(Icons.camera_alt),
-      label: 'Tara',
-    ),
-    NavigationDestination(
-      icon: Icon(Icons.local_taxi_outlined),
-      selectedIcon: Icon(Icons.local_taxi),
-      label: 'Taksi',
-    ),
-    NavigationDestination(
-      icon: Icon(Icons.sos_outlined),
-      selectedIcon: Icon(Icons.sos),
-      label: 'Acil',
-    ),
-    NavigationDestination(
-      icon: Icon(Icons.person_outlined),
-      selectedIcon: Icon(Icons.person),
-      label: 'Profil',
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
+    final destinations = [
+      NavigationDestination(
+        icon: const Icon(Icons.camera_alt_outlined),
+        selectedIcon: const Icon(Icons.camera_alt),
+        label: l10n.navScan,
+      ),
+      NavigationDestination(
+        icon: const Icon(Icons.local_taxi_outlined),
+        selectedIcon: const Icon(Icons.local_taxi),
+        label: l10n.navTaxi,
+      ),
+      NavigationDestination(
+        icon: const Icon(Icons.sos_outlined),
+        selectedIcon: const Icon(Icons.sos),
+        label: l10n.navEmergency,
+      ),
+      NavigationDestination(
+        icon: const Icon(Icons.person_outlined),
+        selectedIcon: const Icon(Icons.person),
+        label: l10n.navProfile,
+      ),
+    ];
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TourSup'),
+        title: Text(l10n.appTitle),
         centerTitle: true,
       ),
       body: _screens[_currentIndex],
@@ -57,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onDestinationSelected: (index) {
           setState(() => _currentIndex = index);
         },
-        destinations: _destinations,
+        destinations: destinations,
       ),
     );
   }

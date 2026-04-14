@@ -1,0 +1,98 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "TourSup",
+
+  "navScan": "Scan",
+  "navTaxi": "Taxi",
+  "navEmergency": "SOS",
+  "navProfile": "Profile",
+
+  "scanTitle": "Visual Guide",
+  "scanButton": "Identify Building",
+  "scanInitializing": "Starting camera...",
+  "scanNotFound": "Building not recognized. Point the camera more directly at it.",
+  "scanConfidence": "Confidence: %{score}",
+  "@scanConfidence": {
+    "placeholders": {
+      "score": { "type": "String" }
+    }
+  },
+
+  "landmarkAbout": "About",
+  "landmarkLocation": "Location",
+  "landmarkSeeDetails": "See Details",
+  "landmarkUnknownDesc": "Detailed information about this landmark will be added soon.",
+
+  "taxiTitle": "Taxi Tracker",
+  "taxiTariffInfo": "Istanbul tariff: Opening ₺{open}  · per km ₺{km}  · per min ₺{min}",
+  "@taxiTariffInfo": {
+    "placeholders": {
+      "open": { "type": "String" },
+      "km":   { "type": "String" },
+      "min":  { "type": "String" }
+    }
+  },
+  "taxiStart": "Start Trip",
+  "taxiStop": "Stop Trip",
+  "taxiResume": "Resume",
+  "taxiNew": "New Trip",
+  "taxiDesc": "GPS-based distance tracking with estimated fare calculated using the current Istanbul tariff.",
+  "taxiPrompt": "Start your taxi trip",
+  "taxiTracking": "Tracking active",
+  "taxiPaused": "Tracking paused",
+  "taxiDistance": "Distance",
+  "taxiDuration": "Duration",
+  "taxiStart2": "Started",
+  "taxiAvgSpeed": "Avg. Speed",
+  "taxiFareLabel": "Estimated Fare",
+  "taxiFareNote": "Calculated using Istanbul tariff",
+  "taxiDeviationTitle": "Route Alert",
+  "taxiDeviationBody": "The taxi has moved further than expected from your starting point. Consider confirming the route with the driver.",
+  "taxiPermissionDenied": "Location permission denied. Please enable it in settings.",
+
+  "emergencyTitle": "Emergency",
+  "emergencySubtitle": "Press SOS — your GPS coordinates will be shared instantly.",
+  "emergencyPolice": "Police",
+  "emergencyAmbulance": "Ambulance",
+  "emergencyTourism": "Tourism",
+  "emergencyFireDept": "Fire Dept.",
+  "emergencyGendarmerie": "Gendarmerie",
+  "emergencyCoastGuard": "Coast Guard",
+  "emergencyTourismLine": "Tourism Helpline",
+  "emergencyNumbers": "Emergency Numbers",
+  "emergencyLastSent": "Last location shared",
+  "emergencyShareTitle": "How to share your location?",
+  "emergencyShareSms": "Send via SMS",
+  "emergencyShareApp": "Share (WhatsApp, etc.)",
+  "emergencyShareMaps": "Open in Google Maps",
+  "emergencyShareText": "EMERGENCY!\nLocation: {coords}\nMap: https://maps.google.com/?q={lat},{lng}",
+  "@emergencyShareText": {
+    "placeholders": {
+      "coords": { "type": "String" },
+      "lat":    { "type": "String" },
+      "lng":    { "type": "String" }
+    }
+  },
+  "emergencySmsText": "EMERGENCY: My location: {coords} — Google Maps: https://maps.google.com/?q={lat},{lng}",
+  "@emergencySmsText": {
+    "placeholders": {
+      "coords": { "type": "String" },
+      "lat":    { "type": "String" },
+      "lng":    { "type": "String" }
+    }
+  },
+  "emergencyGpsError": "Could not get location. Check your GPS signal.",
+  "emergencyPermissionDenied": "Location permission denied. Please enable it in settings.",
+  "emergencyTimeLabel": "At {time}",
+  "@emergencyTimeLabel": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+
+  "understood": "Got it",
+  "minuteShort": "min",
+  "kmShort": "km",
+  "kmPerHour": "km/h"
+}
