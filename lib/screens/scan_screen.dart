@@ -98,6 +98,7 @@ class _ScanScreenState extends State<ScanScreen>
         description: 'Bu yapı hakkında detaylı bilgi yakında eklenecektir.',
         city: '',
         period: '',
+        category: 'Tarihi Yapı',
       );
     }
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/landmark.dart';
+import '../screens/landmark_detail_screen.dart';
 
 class LandmarkCard extends StatelessWidget {
   final Landmark landmark;
@@ -60,6 +61,24 @@ class LandmarkCard extends StatelessWidget {
             Text(
               landmark.description,
               style: Theme.of(context).textTheme.bodyMedium,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 12),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton.icon(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) =>
+                          LandmarkDetailScreen(landmark: landmark),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.info_outline, size: 18),
+                label: const Text('Detayları Gör'),
+              ),
             ),
           ],
         ),
