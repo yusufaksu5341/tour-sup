@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>TourSup, taksi takip ve acil durum özelliklerini kullanabilmek için konumunuza ihtiyaç duyar.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>TourSup, taksi takip ve acil durum özelliklerini kullanabilmek için konumunuza ihtiyaç duyar.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>TourSup, tarihi yapıları tanıyabilmek için kameranıza ihtiyaç duyar.</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
