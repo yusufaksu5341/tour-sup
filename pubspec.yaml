@@ -86,6 +86,7 @@ flutter:
     - assets/labels/landmark_labels.txt
     - assets/labels/landmark_class_map.json
     - assets/icon/
+    - assets/models/model_metadata.json
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
