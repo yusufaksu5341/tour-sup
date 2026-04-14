@@ -1,0 +1,98 @@
+{
+  "@@locale": "tr",
+
+  "appTitle": "TourSup",
+
+  "navScan": "Tara",
+  "navTaxi": "Taksi",
+  "navEmergency": "Acil",
+  "navProfile": "Profil",
+
+  "scanTitle": "Görsel Rehberlik",
+  "scanButton": "Yapıyı Tanı",
+  "scanInitializing": "Kamera başlatılıyor...",
+  "scanNotFound": "Yapı tanınamadı. Kamerayı yapıya daha iyi odaklayın.",
+  "scanConfidence": "Güven skoru: %{score}",
+  "@scanConfidence": {
+    "placeholders": {
+      "score": { "type": "String" }
+    }
+  },
+
+  "landmarkAbout": "Hakkında",
+  "landmarkLocation": "Konum",
+  "landmarkSeeDetails": "Detayları Gör",
+  "landmarkUnknownDesc": "Bu yapı hakkında detaylı bilgi yakında eklenecektir.",
+
+  "taxiTitle": "Taksi Takip",
+  "taxiTariffInfo": "İstanbul tarifesi: Açılış ₺{open}  · km başı ₺{km}  · dk başı ₺{min}",
+  "@taxiTariffInfo": {
+    "placeholders": {
+      "open": { "type": "String" },
+      "km":   { "type": "String" },
+      "min":  { "type": "String" }
+    }
+  },
+  "taxiStart": "Yolculuğu Başlat",
+  "taxiStop": "Yolculuğu Durdur",
+  "taxiResume": "Devam Et",
+  "taxiNew": "Yeni Yolculuk",
+  "taxiDesc": "GPS ile mesafe takibi yapılır ve güncel İstanbul tarifesine göre tahmini ücret hesaplanır.",
+  "taxiPrompt": "Taksi yolculuğunuzu başlatın",
+  "taxiTracking": "Takip aktif",
+  "taxiPaused": "Takip duraklatıldı",
+  "taxiDistance": "Mesafe",
+  "taxiDuration": "Süre",
+  "taxiStart2": "Başlangıç",
+  "taxiAvgSpeed": "Ortalama Hız",
+  "taxiFareLabel": "Tahmini Ücret",
+  "taxiFareNote": "İstanbul tarifesine göre hesaplanmıştır",
+  "taxiDeviationTitle": "Güzergah Uyarısı",
+  "taxiDeviationBody": "Taksi başlangıç noktanızdan beklenenden fazla uzaklaştı. Güzergahı şoföre teyit ettirmeniz önerilir.",
+  "taxiPermissionDenied": "Konum izni verilmedi. Lütfen ayarlardan izin verin.",
+
+  "emergencyTitle": "Acil Durum",
+  "emergencySubtitle": "SOS butonuna basın — GPS koordinatlarınız anında paylaşılır.",
+  "emergencyPolice": "Polis",
+  "emergencyAmbulance": "Ambulans",
+  "emergencyTourism": "Turizm",
+  "emergencyFireDept": "İtfaiye",
+  "emergencyGendarmerie": "Jandarma",
+  "emergencyCoastGuard": "Sahil Güvenlik",
+  "emergencyTourismLine": "ALO Turizm Danışma",
+  "emergencyNumbers": "Acil Numaralar",
+  "emergencyLastSent": "Son konum paylaşımı",
+  "emergencyShareTitle": "Konum nasıl paylaşılsın?",
+  "emergencyShareSms": "SMS ile Gönder",
+  "emergencyShareApp": "Paylaş (WhatsApp, vb.)",
+  "emergencyShareMaps": "Google Maps'te Aç",
+  "emergencyShareText": "ACİL YARDIM GEREKİYOR!\nKonum: {coords}\nHarita: https://maps.google.com/?q={lat},{lng}",
+  "@emergencyShareText": {
+    "placeholders": {
+      "coords": { "type": "String" },
+      "lat":    { "type": "String" },
+      "lng":    { "type": "String" }
+    }
+  },
+  "emergencySmsText": "ACİL YARDIM: Konumum: {coords} — Google Maps: https://maps.google.com/?q={lat},{lng}",
+  "@emergencySmsText": {
+    "placeholders": {
+      "coords": { "type": "String" },
+      "lat":    { "type": "String" },
+      "lng":    { "type": "String" }
+    }
+  },
+  "emergencyGpsError": "Konum alınamadı. GPS sinyalinizi kontrol edin.",
+  "emergencyPermissionDenied": "Konum izni verilmedi. Lütfen ayarlardan izin verin.",
+  "emergencyTimeLabel": "Saat {time}",
+  "@emergencyTimeLabel": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+
+  "understood": "Anladım",
+  "minuteShort": "dk",
+  "kmShort": "km",
+  "kmPerHour": "km/s"
+}
